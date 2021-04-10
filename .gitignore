@@ -1,0 +1,6 @@
+*.log
+*.pot
+*.pyc
+__pycach__
+db.sqlite3
+media
