@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,12 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'ht&qf63e&w4jc8)=&)_6twfo+@s4x4v+s8cd8jb^45#d%e*p5z'
+SECRET_KEY = 'f88mj#!)pv2_jx8d^58+roz4rv2fuhx!@n7%7#lo$6fgy@(h&v'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*',]
 
 
 # Application definition
@@ -37,8 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core',
+    
     'bootstrap4',
+    'social_django',
+    'core.apps.CoreConfig',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'core.middleware.ProfileMiddlware',
 ]
 
 ROOT_URLCONF = 'fastparcel.urls'
@@ -64,6 +69,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -120,3 +127,59 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+LOGIN_URL = '/sign-in/'
+LOGIN_REDIRECT_URL = '/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_FACEBOOK_KEY = "YOUR_FACEBOOK_CLIENT_KEY"
+SOCIAL_AUTH_FACEBOOK_SECRET = "YOUR_FACEBOOK_SECRET_KEY"
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+    'fields': 'id, name, email'
+}
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'YOUR_GMAIL_EMAIL'
+EMAIL_HOST_PASSWORD = 'YOUR_GMAIL_PASSWORD'
+DEFAULT_FROM_EMAIL = 'Fast Parcel <no-reply@fastparcel.localhost>'
+
+FIREBASE_ADMIN_CREDENTIAL = os.path.join(BASE_DIR, "fastparcel-b4712-firebase-adminsdk-r68ol-60314ec9c2.json")
+
+STRIPE_API_PUBLIC_KEY = "pk_test_51IoA1lBTVzU31aXYxErdQyWKdJK4QMh4Sfg5RpiN6XKjnAqTIULzYkxqCaSUxAnOdyizJD1ThJYEz144Q23L9txx00utcJoTEk"
+STRIPE_API_SECRET_KEY = "sk_test_51IoA1lBTVzU31aXYsy1ggaWPTxSHPIwgYhtIcgN8DgdsTV8xG7X1vrFMDPyV2t7iu2IfOgZOQ3BCcESk5Hc6wZB400N5YiAeJe"
+
+GOOGLE_MAP_API_KEY = "YOUR_GOOGLE_MAP_API_KEY"
+
+PAYPAL_MODE = "sandbox"
+PAYPAL_CLIENT_ID = "YOUR_PAYPAL_CLIENT_ID"
+PAYPAL_CLIENT_SECRET = "YOUR_PAYPAL_CLIENT_SECRET"
+
+NOTIFICATION_URL = "YOUR_HEROKU_URL"
+
+ASGI_APPLICATION = "fastparcel.asgi.application"
+
+
+# Channels
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": ['YOUR_HEROKU_REDIS_URL'],
+        },
+    },
+}
+
+# Activate Django Heroku
+import django_on_heroku
+django_on_heroku.settings(locals())
