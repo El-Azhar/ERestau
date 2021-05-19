@@ -29,8 +29,8 @@
               New to Fast Parcel? <a href="#"><b>Sign Up</b></a>
             </p>
             <hr>
-            <a href="#"
-              class="btn btn-outline-primary btn-block">Sign In with Facebook</a>
+            <a href="{% url 'social:begin' 'facebook' %}?next={{ request.GET.next }}"
+              class="btn btn-outline-primary btn-block">S'identifier avec 'Facebook</a>
           </form>
         </div>
       </div>

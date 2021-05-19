@@ -1,0 +1,102 @@
+{% extends 'base_order.html' %}
+
+{% block food_content %}
+
+{% block head %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'order/css/style.css' %}">
+
+{% endblock %}
+
+<br>
+
+
+
+
+
+<style>
+p p.gauche {
+  float: left;
+}
+p a.logo-plus {
+  float: right;
+}
+
+</style>
+
+
+<div class="container">
+    {% if next_category %}
+    <h1 class="display-4">Nos {{next_category}}</h1>
+    {% else  %}
+    <h1 class="display-4">Nos produits</h1>
+    {% endif %}
+
+  <br>
+  <div class="card-columns">
+
+  {% for product in products %}
+    <div class="card" id="card_{{product.id}}">
+      <img src="{{ product.photo.url }}" class="card-img-top">
+
+      <div class="card-body">
+        <h5 class="card-title">{{ product.name }}</h5>
+
+        <div style="display:flex; justify-content: space-between; align-items: center">
+         <h6>100 dh</h6>
+
+            <div class="clickEvent">
+              <div class="logo-plus"  >
+<!--                <a href="{% url 'cart_add' product.id %}">-->
+                <img src="/media/menu/icon/Logo-plus.png" width="50" float="right" id="{{product.id}}">
+                  </a>
+              </div>
+            </div>
+       </div>
+
+      </div>
+
+    </div>
+
+  {% endfor %}
+
+  </div>
+
+</div>
+
+{% load cart_tag %}
+
+<div  id="cart-info">
+
+{% for key,value in request.session.cart.items %}
+<!--    <img src="{{value.image}}" width="120" height="80"><br>-->
+    <div class="cart-info">
+    <p id="value">
+
+        <div class="product_{{key}}_name">
+            {{value.name}}
+        </div>
+
+        <div class="product_{{key}}_price">
+            {{value.price}}
+        </div>
+
+        <div class="product_{{key}}_quantity">
+            {{value.quantity}}
+        </div>
+
+        <div class="product_{{key}}_total">
+            Total {{ value.price|multiply:value.quantity }}
+        </div>
+    </p>
+
+    </div>
+{% endfor %}
+</div>
+
+
+
+
+<script src= "{% static 'order/js/order.js' %}" ></script>
+
+{% endblock %}
