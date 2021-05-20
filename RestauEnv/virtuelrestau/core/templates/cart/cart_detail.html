@@ -1,12 +1,81 @@
-{% load cart_tag %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'order/css/style-cart.css' %}"/>
 
-Total Length :: {{request.session.cart|length}}
+<!-- Pop-up -->
+<div id="popup" class="modal">
+       <div class="modal-dialog">
+                <div class="modal-content">
 
-Cart Detail::
-{% for key,value in request.session.cart.items %}
-    <img src="{{value.image}}" width="120" height="80"><br>
-    {{value.name}}<br>
-    {{value.price}} <br>
-    {{value.quantity}}  <br>
-    Total {{ value.price|multiply:value.quantity }}
-{% endfor %}
+<!-------------------------------   entête du popup  --------------------------->
+                 <div class="modal-header">
+
+					<span class="gauche">
+                        <a href="#" class="btn btn-warning">Retour</a>
+                    </span>
+
+                    <span class=text-header>
+                        Votre panier
+                     </span>
+
+                    <span class="droite">
+                        <a href="#" class="btn btn-warning">Modifier</a>
+                    </span>
+
+
+                 </div>
+<!-------------------------------------------------------------------------------->
+
+<!-------------------------------   Corps du popup  --------------------------->
+
+                 <div class="modal-body">
+
+                     {% for key,value in items %}
+
+                     <div  id="cart-info">
+
+                            <div class="media">
+
+                                  <div class="media-body">
+
+                                    <div class="row">
+
+                                      <div class="col-lg-12">
+                                        <p class="product-name">{{value.name}}</p>
+                                        <p class="text-price"> {{value.price}} Dh</p>
+                                      </div>
+
+                                    </div>
+
+                                  <div class="row">
+
+                                        <div class="col-md-6 text-quantity"> x{{value.quantity}}</div>
+
+                                        <div class="col-md-2.5">
+                                                <img src="/media/menu/icon/Logo-plus.png" class="plus-button">
+                                        </div>
+
+                                        <div class="col-md-1">
+                                                    <p class="text-tiret">-</p>
+                                        </div>
+
+                                        <div class="col-md-2.5">
+                                                    <img src="/media/menu/icon/Logo-plus.png" class="plus-button" >
+                                        </div>
+
+                                  </div>
+
+                                  </div>
+                            </div>
+                   </div>
+                 <br>
+                {% endfor %}
+
+ <!-------------------------------------------------------------------------------->
+
+                 <div class="modal-footer">
+                     <p> Footer du pop-up</p>
+                       </div>
+                </div>
+       </div>
+    </div>
+</div>

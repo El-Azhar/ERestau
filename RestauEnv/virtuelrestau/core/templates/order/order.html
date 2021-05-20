@@ -1,31 +1,27 @@
 {% extends 'base_order.html' %}
 
 {% block food_content %}
-
-{% block head %}
+{% load cart_tag %}
 {% load static %}
-<link rel="stylesheet" href="{% static 'order/css/style.css' %}">
+
+<!------------------------------------------------ block head -------------------------------------------------->
+{% block head %}
+
+<link rel="stylesheet" href="{% static 'order/css/style-homepage.css' %}"/>
+{% include "cart/cart_detail.html" with items=request.session.cart.items %}
 
 {% endblock %}
+<!--------------------------------------------------end head-------------------------------------------------->
+
+
+<div class="fixed-bottom">
+    <button type="button" class="btn btn-primary btn-circle btn-xl" data-toggle="modal" data-target="#popup"></button>
+</div>
 
 <br>
 
 
-
-
-
-<style>
-p p.gauche {
-  float: left;
-}
-p a.logo-plus {
-  float: right;
-}
-
-</style>
-
-
-<div class="container">
+<div class="container" >
     {% if next_category %}
     <h1 class="display-4">Nos {{next_category}}</h1>
     {% else  %}
@@ -33,25 +29,31 @@ p a.logo-plus {
     {% endif %}
 
   <br>
-  <div class="card-columns">
+  <div class="row row-cols-md-1 row-cols-md-2 row-cols-md-3 g-4">
 
   {% for product in products %}
     <div class="card" id="card_{{product.id}}">
       <img src="{{ product.photo.url }}" class="card-img-top">
 
       <div class="card-body">
-        <h5 class="card-title">{{ product.name }}</h5>
 
-        <div style="display:flex; justify-content: space-between; align-items: center">
-         <h6>100 dh</h6>
+          <div class="card-title">
+              <h4> {{ product.name }}</h4>
+          </div>
+
+        <div class="card-price-plus" style="display:flex; justify-content: space-between; align-items: center">
+            <div class="card-price">
+                <p>100 dh</p>
+            </div>
+
 
             <div class="clickEvent">
               <div class="logo-plus"  >
 <!--                <a href="{% url 'cart_add' product.id %}">-->
-                <img src="/media/menu/icon/Logo-plus.png" width="50" float="right" id="{{product.id}}">
-                  </a>
+                <img  class="plus-button" src="/media/menu/icon/Logo-plus.png"  id="{{product.id}}">
               </div>
             </div>
+
        </div>
 
       </div>
@@ -62,41 +64,27 @@ p a.logo-plus {
 
   </div>
 
+
+
 </div>
 
-{% load cart_tag %}
 
-<div  id="cart-info">
 
-{% for key,value in request.session.cart.items %}
-<!--    <img src="{{value.image}}" width="120" height="80"><br>-->
-    <div class="cart-info">
-    <p id="value">
 
-        <div class="product_{{key}}_name">
-            {{value.name}}
-        </div>
-
-        <div class="product_{{key}}_price">
-            {{value.price}}
-        </div>
-
-        <div class="product_{{key}}_quantity">
-            {{value.quantity}}
-        </div>
-
-        <div class="product_{{key}}_total">
-            Total {{ value.price|multiply:value.quantity }}
-        </div>
-    </p>
-
-    </div>
-{% endfor %}
-</div>
 
 
 
 
 <script src= "{% static 'order/js/order.js' %}" ></script>
 
+
 {% endblock %}
+
+
+<!--.btn-circle.btn-xl {-->
+<!--    position: relative;-->
+<!--    width: 15%;-->
+<!--    height: 0;-->
+<!--    padding-bottom: 15%;-->
+<!--    border-radius: 100%;-->
+<!--}-->
