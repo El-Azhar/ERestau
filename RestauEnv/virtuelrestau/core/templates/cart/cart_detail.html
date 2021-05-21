@@ -1,5 +1,5 @@
 {% load static %}
-<link rel="stylesheet" href="{% static 'order/css/style-cart.css' %}"/>
+<link rel="stylesheet" href="{% static 'cart/css/style-cart.css' %}"/>
 
 <!-- Pop-up -->
 <div id="popup" class="modal">
@@ -31,7 +31,7 @@
 
                      {% for key,value in items %}
 
-                     <div  id="cart-info">
+                        <div  id="cart-info">
 
                             <div class="media">
 
@@ -48,10 +48,20 @@
 
                                   <div class="row">
 
-                                        <div class="col-md-6 text-quantity"> x{{value.quantity}}</div>
+                                        <div class="col-md-6">
+                                            <div class="text-quantity">
+                                                <p id="quantity_prod_{{key}}" >  x{{value.quantity}}</p>
+                                            </div>
+                                        </div>
 
                                         <div class="col-md-2.5">
-                                                <img src="/media/menu/icon/Logo-plus.png" class="plus-button">
+
+                                            <div class="clickEvent">
+                                                <div class="logo-moins"  >
+                                                    <img  class="plus-button" src="/media/menu/icon/Logo-moins.png"  id=remove_product_cart_{{key}}>
+                                                </div>
+                                            </div>
+
                                         </div>
 
                                         <div class="col-md-1">
@@ -59,16 +69,24 @@
                                         </div>
 
                                         <div class="col-md-2.5">
-                                                    <img src="/media/menu/icon/Logo-plus.png" class="plus-button" >
+                                            <div class="clickEvent">
+                                                <div class="logo-plus"  >
+                                                    <img  class="plus-button" src="/media/menu/icon/Logo-plus.png"  id="add_product_cart_{{key}}">
+                                                </div>
+                                            </div>
                                         </div>
-
                                   </div>
 
                                   </div>
                             </div>
                    </div>
-                 <br>
-                {% endfor %}
+                        <br>
+
+                    {% endfor %}
+
+                     <p class="total-text"> Total: </p>
+                     <p id="total-price">0 Dh</p>
+
 
  <!-------------------------------------------------------------------------------->
 

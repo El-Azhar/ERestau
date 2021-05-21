@@ -1,17 +1,11 @@
-const img = document.getElementById("img");
-const btn = document.querySelectorAll(".logo-plus");
 
-const cart_info= document.querySelectorAll(".cart-info");
-
-//const product_name= document.querySelectorAll(".product-name");
-//const product_price= document.querySelectorAll(".product-price");
-//const product_total= document.querySelectorAll(".product-total");
-//const product_total= document.querySelectorAll(".product-total");
+const btn_add_product = document.querySelectorAll(".logo-plus");
+/*var ex_id= "remove_product_cart_2"
+console.log(ex_id.split('_'))
+console.log(btn)*/
 
 
-
-
-btn.forEach((item) => {
+btn_add_product.forEach((item) => {
     item.addEventListener('click', (e)=>{
     product_id = e.target.id;
 
@@ -35,16 +29,52 @@ btn.forEach((item) => {
             console.log("quantity: " + quantity)
             console.log("price: " + price)
             console.log("id: " + id)
-            $(".product_" + id + "_quantity").text(quantity)
+            $("p#quantity_prod_" + id).text('x' + quantity)
         }
         })
     })
 
 })
 
-cart_info.forEach((item) =>{
+const btn_remove_product = document.querySelectorAll(".logo-moins");
+
+btn_remove_product.forEach((item) => {
+    item.addEventListener('click', (e)=>{
+        product_id = e.target.id;
+
+        console.log("product_id: " + product_id);
+
+
+        $.ajax({
+            url: '/cart/ajax/',
+            type: 'get',
+            data: {
+                action: 'remove_product',
+                id: product_id
+            },
+            success: function(response){
+                var name = response.name ;
+                var quantity = response.quantity ;
+                var price = response.price ;
+                var id = response.id
+                var total = response.total
+
+                console.log("name: " + name)
+                console.log("quantity: " + quantity)
+                console.log("price: " + price)
+                console.log("id: " + id)
+                $("p#quantity_prod_" + id).text('x' + quantity)
+                $("p#total-price").text(total + " Dhs")
+            }
+        })
+    })
 
 })
+
+
+
+
+
 
 
 
