@@ -10,7 +10,9 @@
                  <div class="modal-header">
 
 					<span class="gauche">
-                        <a href="#" class="btn btn-warning">Retour</a>
+                        <div class="retour-popup-cart">
+                            <a href="#" class="btn btn-warning" >Retour</a>
+                        </div>
                     </span>
 
                     <span class=text-header>
@@ -49,9 +51,7 @@
                                   <div class="row">
 
                                         <div class="col-md-6">
-                                            <div class="text-quantity">
-                                                <p id="quantity_prod_{{key}}" >  x{{value.quantity}}</p>
-                                            </div>
+                                                <p id="quantity_prod_{{key}}" class="text-quantity-value">  x{{value.quantity}}</p>
                                         </div>
 
                                         <div class="col-md-2.5">
@@ -83,16 +83,23 @@
                         <br>
 
                     {% endfor %}
+                     <div class="row">
+                         <div class="col-md-7">
+                             <p id="total-text"> Total: </p>
+                         </div>
+                         <div class="col-md-5">
+                             <p id="total-price">0 Dh</p>
+                         </div>
+                     </div>
 
-                     <p class="total-text"> Total: </p>
-                     <p id="total-price">0 Dh</p>
 
 
  <!-------------------------------------------------------------------------------->
 
                  <div class="modal-footer">
-                     <p> Footer du pop-up</p>
-                       </div>
+                     <a href="#" class="btn btn-success">Commander</a>
+                 </div>
+                 </div>
                 </div>
        </div>
     </div>

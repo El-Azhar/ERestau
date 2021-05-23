@@ -54,10 +54,11 @@ p.text-price {
     margin-right: 15px;
 }
 
-.text-quantity {
-    position: relative;
+
+
+.text-quantity-value {
+    text-align: left;
     font-size: 1.65rem;
-    bottom: -15px;
 }
 
 p.text-tiret{
@@ -72,4 +73,16 @@ p.text-tiret{
 .row {
     margin-right : 0px;
     margin-left : 0px;
+}
+
+#total-text {
+    font-size: 1.65rem;
+    text-align: left;
+    color: #062b32;
+}
+
+#total-price {
+    font-size: 1.50rem;
+    text-align: right;
+    color: #062b32;
 }

@@ -50,6 +50,27 @@ def cart_clear(request):
 def cart_detail(request):
     return render(request, 'cart/cart_detail.html')
 
+@login_required()
+def get_total_cart(request):
+    cart = Cart(request)
+
+    total = 0
+    for curr_dict_val in cart.cart.values():
+        total += float(curr_dict_val.get('quantity')) * float(curr_dict_val.get('price'))
+
+    return total\
+
+@login_required()
+def get_nb_articles(request):
+    cart = Cart(request)
+
+    nb_articles = 0
+    for curr_dict_val in cart.cart.values():
+        curr_quantity = int(curr_dict_val.get('quantity'))
+        if curr_quantity > 0:
+            nb_articles += 1
+    return nb_articles
+
 class AjaxHandlerView(View):
 
     def get(self, request):
@@ -67,8 +88,7 @@ class AjaxHandlerView(View):
 
                 cart_add(request, id)
 
-
-            if action == 'remove_product' :
+            elif action == 'remove_product' :
 
                 if 'remove_product_cart_' in request.GET.get('id'):
                     id = str(request.GET.get('id')).split('remove_product_cart_')[1]
@@ -78,6 +98,12 @@ class AjaxHandlerView(View):
                 print("id in request remove_product_cart_: " + str(id))
 
                 item_decrement(request, id)
+
+            elif action == 'get_total_cart':
+                total = get_total_cart(request)
+                nb_articles = get_nb_articles(request)
+                print('{"total": total, "nb_articles":nb_articles}: ' + str({"total": total, "nb_articles":nb_articles}))
+                return JsonResponse({"total": total, "nb_articles":nb_articles}, status=200)
 
             values = list(request.session.get('cart').values())
 
@@ -90,6 +116,8 @@ class AjaxHandlerView(View):
                 price = product_dict.get("price")
                 name = product_dict.get("name")
 
+            total = get_total_cart(request)
+            nb_articles = get_nb_articles(request)
 
             dict_response = {
                 'name': name,
@@ -97,6 +125,7 @@ class AjaxHandlerView(View):
                 'quantity': quantity,
                 'id': id,
                 'total': total,
+                'nb_articles': nb_articles,
             }
 
             return JsonResponse(dict_response, status=200)
