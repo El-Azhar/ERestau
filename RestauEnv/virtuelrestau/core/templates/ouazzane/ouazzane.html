@@ -1,0 +1,91 @@
+{% extends 'base_order.html' %}
+
+{% block food_content %}
+{% load cart_tag %}
+{% load static %}
+
+<!------------------------------------------------ block head -------------------------------------------------->
+{% block head %}
+
+<link rel="stylesheet" href="{% static 'ouazzane/css/ouazzane.css' %}"/>
+{% include "cart/cart_detail.html" with items=request.session.cart.items %}
+
+{% endblock %}
+<!--------------------------------------------------end head-------------------------------------------------->
+
+
+<div class="fixed-bottom">
+    <button type="button" class="btn btn-primary btn-circle btn-xl" data-toggle="modal" data-target="#popup"></button>
+    <div id="cercle_nb_articles">
+        10
+    </div>
+</div>
+
+<br>
+
+
+<div class="container" >
+    {% if next_category %}
+    <h1 class="display-4">Nos {{next_category}}</h1>
+    {% else  %}
+    <h1 class="display-4">Nos produits</h1>
+    {% endif %}
+
+  <br>
+  <div class="row row-cols-md-1 row-cols-md-2 row-cols-md-3 g-4">
+
+  {% for product in products %}
+    <div class="card" id="card_{{product.id}}" style="margin: 3%;">
+      <img src="{{ product.photo.url }}" class="card-img-top">
+
+      <div class="card-body">
+
+          <div class="card-title">
+              <h4> {{ product.name }}</h4>
+          </div>
+
+        <div class="card-price-plus" style="display:flex; justify-content: space-between; align-items: center">
+            <div class="card-price">
+                <p>100 dh</p>
+            </div>
+
+
+            <div class="clickEvent">
+              <div class="logo-plus"  >
+                <img class="plus-button" src="/media/menu/icon/Logo-plus.png" id="{{product.id}}">
+              </div>
+            </div>
+
+       </div>
+
+      </div>
+
+    </div>
+
+  {% endfor %}
+
+  </div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<script src= "{% static 'ouazzane/js/ouazzane.js' %}" ></script>
+
+{% endblock %}
+
+
+<!--.btn-circle.btn-xl {-->
+<!--    position: relative;-->
+<!--    width: 15%;-->
+<!--    height: 0;-->
+<!--    padding-bottom: 15%;-->
+<!--    border-radius: 100%;-->
+<!--}-->

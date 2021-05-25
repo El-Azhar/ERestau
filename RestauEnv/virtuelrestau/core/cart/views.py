@@ -130,4 +130,4 @@ class AjaxHandlerView(View):
 
             return JsonResponse(dict_response, status=200)
 
-        return render(request, 'order/order.html')
+        return render(request, 'order/../templates/ouazzane/ouazzane.html')

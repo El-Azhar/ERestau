@@ -1,91 +1,31 @@
-{% extends 'base_order.html' %}
-
-{% block food_content %}
-{% load cart_tag %}
+{% extends 'base.html' %}
+{% load bootstrap4 %}
 {% load static %}
-
-<!------------------------------------------------ block head -------------------------------------------------->
 {% block head %}
 
-<link rel="stylesheet" href="{% static 'order/css/style-homepage.css' %}"/>
-{% include "cart/cart_detail.html" with items=request.session.cart.items %}
+
 
 {% endblock %}
-<!--------------------------------------------------end head-------------------------------------------------->
 
+{% block content %}
 
-<div class="fixed-bottom">
-    <button type="button" class="btn btn-primary btn-circle btn-xl" data-toggle="modal" data-target="#popup"></button>
-    <div id="cercle_nb_articles">
-        10
-    </div>
+<div class="container mt-5">
+    <form method="POST" class="form-client">
+        {% csrf_token %}
+        {% bootstrap_form_errors form %}
+        {% bootstrap_field form.first_name%}
+        {% bootstrap_field form.last_name %}
+        {% bootstrap_field form.adresse %}
+        {% bootstrap_field form.phone_number %}
+        <div class="clickEvent">
+            <div class="button-form">
+                <a  class="btn btn-warning btn-block" data-toggle="modal" data-target="#popup_command" id="button-valid-form">Valider les informations</a>
+            </div>
+        </div>
+    </form>
 </div>
 
-<br>
-
-
-<div class="container" >
-    {% if next_category %}
-    <h1 class="display-4">Nos {{next_category}}</h1>
-    {% else  %}
-    <h1 class="display-4">Nos produits</h1>
-    {% endif %}
-
-  <br>
-  <div class="row row-cols-md-1 row-cols-md-2 row-cols-md-3 g-4">
-
-  {% for product in products %}
-    <div class="card" id="card_{{product.id}}">
-      <img src="{{ product.photo.url }}" class="card-img-top">
-
-      <div class="card-body">
-
-          <div class="card-title">
-              <h4> {{ product.name }}</h4>
-          </div>
-
-        <div class="card-price-plus" style="display:flex; justify-content: space-between; align-items: center">
-            <div class="card-price">
-                <p>100 dh</p>
-            </div>
-
-
-            <div class="clickEvent">
-              <div class="logo-plus"  >
-                <img  class="plus-button" src="/media/menu/icon/Logo-plus.png"  id="{{product.id}}">
-              </div>
-            </div>
-
-       </div>
-
-      </div>
-
-    </div>
-
-  {% endfor %}
-
-  </div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
+{% include "order/summary_order.html" with items=request.session.cart.items adresse=form.adresse.value %}
 <script src= "{% static 'order/js/order.js' %}" ></script>
 
 {% endblock %}
-
-
-<!--.btn-circle.btn-xl {-->
-<!--    position: relative;-->
-<!--    width: 15%;-->
-<!--    height: 0;-->
-<!--    padding-bottom: 15%;-->
-<!--    border-radius: 100%;-->
-<!--}-->

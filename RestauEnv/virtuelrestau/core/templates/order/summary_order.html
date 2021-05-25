@@ -1,0 +1,72 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'summary_order/css/summary_order.css' %}"/>
+
+<div id="popup_command" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-------------------------------   entête du popup  --------------------------->
+            <div class="modal-header">
+
+					<span class="gauche">
+                        <div class="retour-popup-cart">
+                            <a href="#" class="btn btn-warning" >Retour</a>
+                        </div>
+                    </span>
+
+                <span class=text-header>
+                        Votre panier
+                     </span>
+
+                <span class="droite">
+                        <a href="#" class="btn btn-warning">Modifier</a>
+                    </span>
+
+
+            </div>
+            <!-------------------------------------------------------------------------------->
+
+            <!-------------------------------   Corps du popup  --------------------------->
+
+            <div class="modal-body">
+
+                <section class="order">
+                    <h1 class="order__title no-margin">Confirmer votre demande</h1>
+                    <section class="subsection-order">
+                        <table id="values" class="table-order">
+                            <td class="product-name" >Produits</td>
+                            <td class="text-price" align="right">Prix</td>
+                            <tbody>
+                            {% for key,value in items %}
+                            <tr>
+                                <td class="product-name"> {{ value.quantity }}x {{value.name}}</td>
+                                <td class="text-price" align="right"> {{value.price}} Dh</td>
+                            </tr>
+                            {%  endfor %}
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td id="total-text">Total</td>
+                                <td id="total-price" align="right">0 Dh</td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                        <br>
+                        <table class="table-adresse">
+                            <td id="product-name">Adresse</td>
+                            <td id="text-price" align="right">{{ adresse }}</td>
+                        </table>
+                    </section>
+                </section>
+                <!-------------------------------------------------------------------------------->
+
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-success">Valider la commande</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src= "{% static 'summary_order/js/summary_order.js' %}" ></script>
+

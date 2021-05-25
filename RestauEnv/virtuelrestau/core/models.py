@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 class Category(models.Model):
@@ -25,3 +25,18 @@ class Product(models.Model):
     status = models.CharField(max_length=20, choices=STATUSES, default=INDISPONIBLE)
     def __str__(self):
         return self.name
+
+class Order(models.Model):
+    CONFIRMEE = "confirmer"
+    NON_CONFIRMEE = "non-confirmer"
+    STATUSES = (
+        (CONFIRMEE, 'Confirmée'),
+        (NON_CONFIRMEE, 'Non confirmée'),
+    )
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    adresse = models.CharField(max_length=255)
+    phone_number = models.CharField(max_length=255)
+    products = models.ManyToManyField(Category)
+    status = models.CharField(max_length=20, choices=STATUSES, default=NON_CONFIRMEE)

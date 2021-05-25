@@ -54,7 +54,7 @@
                                                 <p id="quantity_prod_{{key}}" class="text-quantity-value">  x{{value.quantity}}</p>
                                         </div>
 
-                                        <div class="col-md-2.5">
+                                        <div class="col-md-3">
 
                                             <div class="clickEvent">
                                                 <div class="logo-moins"  >
@@ -64,11 +64,9 @@
 
                                         </div>
 
-                                        <div class="col-md-1">
-                                                    <p class="text-tiret">-</p>
-                                        </div>
 
-                                        <div class="col-md-2.5">
+
+                                        <div class="col-md-3">
                                             <div class="clickEvent">
                                                 <div class="logo-plus"  >
                                                     <img  class="plus-button" src="/media/menu/icon/Logo-plus.png"  id="add_product_cart_{{key}}">
@@ -97,7 +95,7 @@
  <!-------------------------------------------------------------------------------->
 
                  <div class="modal-footer">
-                     <a href="#" class="btn btn-success">Commander</a>
+                     <a href="{% url 'order'%}" class="btn btn-success">Commander</a>
                  </div>
                  </div>
                 </div>

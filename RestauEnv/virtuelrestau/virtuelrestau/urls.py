@@ -41,7 +41,8 @@ urlpatterns = [
 ]
 
 order_urlpattern = [
-    path(r'order/', order_views.order_page, name='order')
+    path(r'ouazzane/', order_views.ouazzane_page, name='ouazzane'),
+    path(r'order/', order_views.order, name='order')
 ]
 
 cart_urlpatterns = [

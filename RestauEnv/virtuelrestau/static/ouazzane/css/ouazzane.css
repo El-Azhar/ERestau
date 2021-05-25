@@ -25,7 +25,9 @@ div.scrollmenu a:hover {
 
 /* cass card */
 
-
+.row {
+    justify-content: space-around;
+}
 .card-title {
     text-transform: uppercase;
 }
@@ -33,12 +35,14 @@ div.scrollmenu a:hover {
 .plus-button {
     width:75px ;
     cursor:pointer;
-    float:right, bottom;
+    float:right;
 }
 
 .card-price {
     font-size: 2rem;
-    float: left, bottom;
+    float: left;
+    margin-top: 1rem;
+    /*margin-bottom: 2rem;*/
 }
 /* css button cart */
 .btn-circle.btn-xl {
