@@ -22,9 +22,11 @@ from django.urls import path, include
 from django.contrib.auth import views as auth_views
 
 from core import views
-from core.cart.views import AjaxHandlerView
 from core.order import views as order_views
 from core.cart import views as cart_views
+
+from core.cart.views import AjaxCartView
+from core.order.views import AjaxOrderView
 
 
 
@@ -42,7 +44,7 @@ urlpatterns = [
 
 order_urlpattern = [
     path(r'ouazzane/', order_views.ouazzane_page, name='ouazzane'),
-    path(r'order/', order_views.order, name='order')
+    path(r'order/', order_views.order, name='order'),
 ]
 
 cart_urlpatterns = [
@@ -57,7 +59,9 @@ cart_urlpatterns = [
 ]
 
 ajax_url_patterns = [
-    path('cart/ajax/', AjaxHandlerView.as_view())
+    path('cart/ajax/', AjaxCartView.as_view()),
+    path(r'order/new_order/', AjaxOrderView.as_view(), name='new_order'),
+
 ]
 
 urlpatterns = urlpatterns + order_urlpattern + cart_urlpatterns + ajax_url_patterns

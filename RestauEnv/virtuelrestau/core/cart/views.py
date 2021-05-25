@@ -71,10 +71,9 @@ def get_nb_articles(request):
             nb_articles += 1
     return nb_articles
 
-class AjaxHandlerView(View):
+class AjaxCartView(View):
 
     def get(self, request):
-        print(request.GET)
         if request.is_ajax():
             action = request.GET.get('action')
 
@@ -84,7 +83,7 @@ class AjaxHandlerView(View):
                 else:
                     id = request.GET.get('id')
 
-                print("id in request add_product: " + str(id))
+                # print("id in request add_product: " + str(id))
 
                 cart_add(request, id)
 
@@ -95,7 +94,7 @@ class AjaxHandlerView(View):
                 else:
                     id = request.GET.get('id')
 
-                print("id in request remove_product_cart_: " + str(id))
+                # print("id in request remove_product_cart_: " + str(id))
 
                 item_decrement(request, id)
 
@@ -130,4 +129,5 @@ class AjaxHandlerView(View):
 
             return JsonResponse(dict_response, status=200)
 
-        return render(request, 'order/../templates/ouazzane/ouazzane.html')
+        return render(request, 'ouazzane/ouazzane.html')
+

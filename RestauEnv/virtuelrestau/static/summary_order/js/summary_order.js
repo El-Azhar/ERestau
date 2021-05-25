@@ -1,6 +1,4 @@
 
-
-
 $.ajax({
     url: '/cart/ajax/',
     type: 'get',

@@ -11,4 +11,19 @@ btn_valid_customer_form[0].addEventListener('click', e =>{
     var phone_number = $("#id_phone_number").val();
 
     $("td#text-price").text(adresse)
+
+    $.ajax({
+        url: 'new_order/',
+        type: 'get',
+        data: {
+            action: 'new_order',
+            last_name :last_name,
+            first_name  :first_name,
+            adresse :adresse,
+            phone_number : phone_number,
+        },
+        success: function(response){
+
+        }
+    })
 })
