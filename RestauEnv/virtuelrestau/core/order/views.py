@@ -7,6 +7,7 @@ from django.views import View
 
 from core.order.forms import OrderForm
 from core.models import Product, Category, Order, SelectedProduct, IdOrder
+from core.cart.views import get_total_cart
 
 
 @login_required()
@@ -30,7 +31,7 @@ def ouazzane_page(request):
 @login_required()
 def order(request):
 
-    form = OrderForm()
+    form = OrderForm(initial={'first_name': request.user.first_name, 'last_name': request.user.last_name})
     current_user = request.user
 
     defaut_firstname = current_user.first_name
@@ -64,9 +65,9 @@ def get_selected_articles(request, new_order_id):
                 user = request.user,
                 name = curr_product.name,
                 category = curr_product.category,
-                price = curr_product.price,
+                price = float(curr_product.price),
                 quantity = int(curr_dict_val.get('quantity')),
-                order_id = new_order_id
+                order_id = new_order_id,
             )
             selected_product.save()
 
@@ -79,21 +80,29 @@ class AjaxOrderView(View):
         print(request.GET)
         if request.is_ajax():
             action = request.GET.get('action')
-
+            if action == "confirm_order":
+                order_id = int(request.GET.get('order_id'))
+                print("order_id: " + str(order_id))
+                orders = Order.objects.filter(order_id=order_id)
+                for order in orders:
+                    order.is_confirmed = True
+                    order.save()
+                return  JsonResponse({}, status=200)
             if action == 'new_order' :
                 last_name  = request.GET.get('last_name')
                 first_name  = request.GET.get('first_name')
                 adresse  = request.GET.get('adresse')
                 phone_number  = request.GET.get('phone_number')
 
-                print("request.user: " + str(request.user))
-                print("type of request.user: " + str(type(request.user)))
+                # print("request.user: " + str(request.user))
+                # print("type of request.user: " + str(type(request.user)))
 
                 new_id_order = IdOrder(user=request.user)
                 new_id_order.save()
-                print("new_id_order: " + str(new_id_order.id))
+                # print("new_id_order: " + str(new_id_order.id))
                 list_selected_products = get_selected_articles(request, new_id_order.id)
                 print(list_selected_products)
+
                 for selected_product in list_selected_products:
                     new_order = Order(last_name=last_name,
                                       first_name = first_name,
@@ -102,7 +111,10 @@ class AjaxOrderView(View):
                                       user = request.user,
                                       selected_product = selected_product,
                                       order_id = new_id_order.id,
+                                      total = float(selected_product.price) * float(selected_product.quantity),
                                       )
                     new_order.save()
 
-        return JsonResponse({}, status=200)
+                return JsonResponse({'order_id': str(new_id_order.id)}, status=200)
+
+        return render(request, 'order/order.html')

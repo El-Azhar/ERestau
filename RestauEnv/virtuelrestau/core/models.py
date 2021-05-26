@@ -43,11 +43,11 @@ class SelectedProduct(models.Model):
 
 
 class Order(models.Model):
-    CONFIRMEE = "confirmer"
-    NON_CONFIRMEE = "non-confirmer"
+    LIVRER = "livrer"
+    NON_LIVRER = "non-livrer"
     STATUSES = (
-        (CONFIRMEE, 'Confirmée'),
-        (NON_CONFIRMEE, 'Non confirmée'),
+        (LIVRER, 'Livrée'),
+        (NON_LIVRER, 'Non livrée'),
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=255)
@@ -55,7 +55,8 @@ class Order(models.Model):
     adresse = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=255)
     selected_product = models.ForeignKey(SelectedProduct, on_delete=models.SET_NULL, null=True)
-    status = models.CharField(max_length=20, choices=STATUSES, default=NON_CONFIRMEE)
+    status = models.CharField(max_length=20, choices=STATUSES, default=NON_LIVRER)
+    is_confirmed = models.BooleanField(default=False)
     created_at = models.DateTimeField(default=timezone.now)
     order_id = models.IntegerField(default=0, editable=False)
     total = models.IntegerField(default=0)

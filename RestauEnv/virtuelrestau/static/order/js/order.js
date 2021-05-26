@@ -10,7 +10,7 @@ btn_valid_customer_form[0].addEventListener('click', e =>{
     var adresse = $("#id_adresse").val();
     var phone_number = $("#id_phone_number").val();
 
-    $("td#text-price").text(adresse)
+    $("td#product-adresse").text(adresse)
 
     $.ajax({
         url: 'new_order/',
@@ -23,7 +23,8 @@ btn_valid_customer_form[0].addEventListener('click', e =>{
             phone_number : phone_number,
         },
         success: function(response){
-
+            var order_id = response.order_id
+            $("td#order-number").text( order_id)
         }
     })
 })
