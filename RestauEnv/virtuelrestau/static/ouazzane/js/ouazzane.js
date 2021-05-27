@@ -1,5 +1,4 @@
-
-const btn_add_product = document.querySelectorAll(".logo-plus");
+console.log("run ouazzane.js")
 const total_price = document.querySelector("#cercle_nb_articles");
 const retour_popup_cart = document.querySelector(".retour-popup-cart")
 /* var ex_id= "remove_product_cart_2"
@@ -24,7 +23,7 @@ $.ajax({
     }
 })
 
-
+const btn_add_product = document.querySelectorAll(".logo-plus");
 btn_add_product.forEach((item) => {
     item.addEventListener('click', (e)=>{
     product_id = e.target.id;
@@ -46,12 +45,10 @@ btn_add_product.forEach((item) => {
             var total = response.total
             var nb_articles = response.nb_articles
 
-/*
-            console.log("name: " + name)
+/*            console.log("name: " + name)
             console.log("quantity: " + quantity)
             console.log("price: " + price)
-            console.log("id: " + id)
-*/
+            console.log("id: " + id)*/
 
             $("p#quantity_prod_" + id).text('x' + quantity)
             $("p#total-price").text(total + " Dhs")
@@ -64,7 +61,6 @@ btn_add_product.forEach((item) => {
 })
 
 const btn_remove_product = document.querySelectorAll(".logo-moins");
-
 btn_remove_product.forEach((item) => {
     item.addEventListener('click', (e)=>{
         product_id = e.target.id;
@@ -106,7 +102,29 @@ retour_popup_cart.addEventListener('click', e =>{
 })
 
 
+function update_popup(){
+    $('.cart-card-items').html('').load("/update_popup_carts")
+}
 
+function  update_item(){
+    $('.cart-card-items').html('').load("/update_cart_items")
+}
+
+var button_cart = document.querySelector("#cart-button")
+button_cart.addEventListener('click', e=>{
+    update_item()
+    console.log("update item executed")
+    // update_popup()
+})
+
+
+// const button_cart = document.querySelector("#cart-button")
+// button_cart.addEventListener('click', e=>{
+//     $("#popup.modal").reload()
+// })const button_cart = document.querySelector("#cart-button")
+// // button_cart.addEventListener('click', e=>{
+// //     $("#popup.modal").reload()
+// // })
 
 
 

@@ -48,7 +48,20 @@ def cart_clear(request):
 
 @login_required()
 def cart_detail(request):
-    return render(request, 'cart/cart_detail.html')
+    return render(request, 'cart/cart_popup.html')
+
+@login_required()
+def update_popup_carts(request):
+    cart = Cart(request)
+    items = cart.cart.items
+    return render(request, 'cart/cart_popup.html',  {'items': items})
+
+@login_required()
+def update_cart_items(request):
+    cart = Cart(request)
+    items = cart.cart.items
+    print("items: " + str(items))
+    return render(request, 'cart/cart_card_items.html', {'items': items})
 
 @login_required()
 def get_total_cart(request):
@@ -83,10 +96,11 @@ class AjaxCartView(View):
                 else:
                     id = request.GET.get('id')
 
-                # print("id in request add_product: " + str(id))
-
-                cart_add(request, id)
-
+                try:
+                    cart_add(request, id)
+                    print("cart add ok")
+                except:
+                    return Exception("CARD_ADD ERROR")
             elif action == 'remove_product' :
 
                 if 'remove_product_cart_' in request.GET.get('id'):
@@ -101,7 +115,7 @@ class AjaxCartView(View):
             elif action == 'get_total_cart':
                 total = get_total_cart(request)
                 nb_articles = get_nb_articles(request)
-                print('{"total": total, "nb_articles":nb_articles}: ' + str({"total": total, "nb_articles":nb_articles}))
+                # print('{"total": total, "nb_articles":nb_articles}: ' + str({"total": total, "nb_articles":nb_articles}))
                 return JsonResponse({"total": total, "nb_articles":nb_articles}, status=200)
 
             values = list(request.session.get('cart').values())
@@ -110,10 +124,10 @@ class AjaxCartView(View):
                 curr_id = str(product_dict.get('product_id'))
                 if curr_id != id:
                     continue
-
-                quantity = product_dict.get("quantity")
-                price = product_dict.get("price")
-                name = product_dict.get("name")
+                else:
+                    quantity = product_dict.get("quantity")
+                    price = product_dict.get("price")
+                    name = product_dict.get("name")
 
             total = get_total_cart(request)
             nb_articles = get_nb_articles(request)
@@ -131,9 +145,3 @@ class AjaxCartView(View):
 
         return render(request, 'ouazzane/ouazzane.html')
 
-
-def update_cart_items(request):
-    cart = Cart(request)
-    items = cart.cart
-    print('items: ' + dir(items))
-    return(render(request, 'table_body.html'))
