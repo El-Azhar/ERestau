@@ -131,3 +131,9 @@ class AjaxCartView(View):
 
         return render(request, 'ouazzane/ouazzane.html')
 
+
+def update_cart_items(request):
+    cart = Cart(request)
+    items = cart.cart
+    print('items: ' + dir(items))
+    return(render(request, 'table_body.html'))

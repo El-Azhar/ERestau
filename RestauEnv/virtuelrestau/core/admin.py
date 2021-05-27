@@ -11,7 +11,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ['name', 'description', 'quantity', 'status']
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['user', 'first_name', 'last_name',  'selected_product','total','is_confirmed',  'phone_number', 'status', 'created_at', 'order_id']
+    list_display = ['user', 'first_name', 'last_name',  'selected_product','price','is_confirmed',  'phone_number', 'status', 'created_at', 'order_id']
 
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Product, ProductAdmin)

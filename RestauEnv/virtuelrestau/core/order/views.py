@@ -7,7 +7,7 @@ from django.views import View
 
 from core.order.forms import OrderForm
 from core.models import Product, Category, Order, SelectedProduct, IdOrder
-from core.cart.views import get_total_cart
+from core.cart.views import get_total_cart, cart_clear, update_cart_items
 
 
 @login_required()
@@ -27,7 +27,6 @@ def ouazzane_page(request):
     extra_context = {"products": products,"next_category": next_category }
     return render(request, 'ouazzane/ouazzane.html', extra_context)
 
-
 @login_required()
 def order(request):
 
@@ -37,9 +36,9 @@ def order(request):
     defaut_firstname = current_user.first_name
     defaut_lastname = current_user.last_name
 
-    print("current_user: " +str(current_user))
-    print("defaut_firstname: " + str(defaut_firstname))
-    print("defaut_lastname: " + str(defaut_lastname))
+    # print("current_user: " +str(current_user))
+    # print("defaut_firstname: " + str(defaut_firstname))
+    # print("defaut_lastname: " + str(defaut_lastname))
 
     extra_context = {
         "form": form,
@@ -48,6 +47,12 @@ def order(request):
     }
 
     return render(request, 'order/order.html', extra_context)
+
+@login_required()
+def order_preparation(request):
+    # extra_context = {"order_id: ": request.order_id}
+    extra_context = {}
+    return render(request, 'order/order_preparation.html', extra_context)
 
 @login_required()
 def get_selected_articles(request, new_order_id):
@@ -72,7 +77,7 @@ def get_selected_articles(request, new_order_id):
             selected_product.save()
 
             list_selected_products.append(selected_product)
-    print("list_selected_products de la fonction: " + str(list_selected_products))
+    # print("list_selected_products de la fonction: " + str(list_selected_products))
     return list_selected_products
 
 class AjaxOrderView(View):
@@ -80,15 +85,21 @@ class AjaxOrderView(View):
         print(request.GET)
         if request.is_ajax():
             action = request.GET.get('action')
+
             if action == "confirm_order":
                 order_id = int(request.GET.get('order_id'))
                 print("order_id: " + str(order_id))
                 orders = Order.objects.filter(order_id=order_id)
+
                 for order in orders:
                     order.is_confirmed = True
                     order.save()
+
+                #On vide la panier
+                cart_clear(request)
                 return  JsonResponse({}, status=200)
-            if action == 'new_order' :
+
+            elif action == 'new_order' :
                 last_name  = request.GET.get('last_name')
                 first_name  = request.GET.get('first_name')
                 adresse  = request.GET.get('adresse')
@@ -111,10 +122,30 @@ class AjaxOrderView(View):
                                       user = request.user,
                                       selected_product = selected_product,
                                       order_id = new_id_order.id,
-                                      total = float(selected_product.price) * float(selected_product.quantity),
+                                      price = float(selected_product.price) * float(selected_product.quantity),
                                       )
                     new_order.save()
 
                 return JsonResponse({'order_id': str(new_id_order.id)}, status=200)
+
+            elif action == 'change_order' :
+                last_name  = request.GET.get('last_name')
+                first_name  = request.GET.get('first_name')
+                adresse  = request.GET.get('adresse')
+                phone_number  = request.GET.get('phone_number')
+
+                order_id  = request.GET.get('order_id')
+                # print("new_id_order: " + str(new_id_order.id))
+                list_selected_products = SelectedProduct.objects.filter(order_id=order_id)
+                list_order = Order.objects.filter(order_id=order_id)
+
+                for order in list_order:
+                    order.last_name = last_name
+                    order.first_name = first_name
+                    order.phone_number = phone_number
+                    order.adresse = adresse
+                    order.save()
+
+                return JsonResponse({'order_id': order_id}, status=200)
 
         return render(request, 'order/order.html')

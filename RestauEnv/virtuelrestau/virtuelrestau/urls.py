@@ -45,6 +45,8 @@ urlpatterns = [
 order_urlpattern = [
     path(r'ouazzane/', order_views.ouazzane_page, name='ouazzane'),
     path(r'order/', order_views.order, name='order'),
+    path(r'order_preparation/', order_views.order_preparation, name='order_preparation'),
+    path(r'update_cart_items/', order_views.update_cart_items),
 ]
 
 cart_urlpatterns = [

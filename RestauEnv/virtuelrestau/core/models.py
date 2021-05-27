@@ -59,7 +59,7 @@ class Order(models.Model):
     is_confirmed = models.BooleanField(default=False)
     created_at = models.DateTimeField(default=timezone.now)
     order_id = models.IntegerField(default=0, editable=False)
-    total = models.IntegerField(default=0)
+    price = models.IntegerField(default=0)
 def __str__(self):
         str_order = self.first_name + self.last_name
         return str_order
