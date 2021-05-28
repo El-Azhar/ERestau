@@ -40,16 +40,21 @@
                              <p id="total-text"> Total: </p>
                          </div>
                          <div class="col-md-5">
-                             <p id="total-price">0 Dh</p>
+                             <p id="total-price"> Dh</p>
                          </div>
                      </div>
-
 
 
  <!-------------------------------------------------------------------------------->
 
                  <div class="modal-footer">
-                     <a href="{% url 'order'%}" class="btn btn-success">Commander</a>
+                    <span class="gauche">
+                         <a href="#" class="btn btn-danger" id="clear-cart">Vider le panier</a>
+                    </span>
+                     <span class=text-header></span>
+                     <span class="gauche">
+                         <a href="{% url 'order'%}" class="btn btn-success">Commander</a>
+                    </span>
                  </div>
                  </div>
                 </div>

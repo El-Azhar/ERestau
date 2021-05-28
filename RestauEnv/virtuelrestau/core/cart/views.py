@@ -7,7 +7,6 @@ from django.contrib.auth.decorators import login_required
 from cart.cart import Cart
 
 
-
 @login_required()
 def cart_add(request, id):
     cart = Cart(request)
@@ -45,7 +44,6 @@ def cart_clear(request):
     cart.clear()
     return redirect("cart_detail")
 
-
 @login_required()
 def cart_detail(request):
     return render(request, 'cart/cart_popup.html')
@@ -71,7 +69,8 @@ def get_total_cart(request):
     for curr_dict_val in cart.cart.values():
         total += float(curr_dict_val.get('quantity')) * float(curr_dict_val.get('price'))
 
-    return total\
+
+    return total
 
 @login_required()
 def get_nb_articles(request):
@@ -81,7 +80,7 @@ def get_nb_articles(request):
     for curr_dict_val in cart.cart.values():
         curr_quantity = int(curr_dict_val.get('quantity'))
         if curr_quantity > 0:
-            nb_articles += 1
+            nb_articles += curr_quantity
     return nb_articles
 
 class AjaxCartView(View):
@@ -98,9 +97,9 @@ class AjaxCartView(View):
 
                 try:
                     cart_add(request, id)
-                    print("cart add ok")
                 except:
                     return Exception("CARD_ADD ERROR")
+
             elif action == 'remove_product' :
 
                 if 'remove_product_cart_' in request.GET.get('id'):
@@ -108,15 +107,20 @@ class AjaxCartView(View):
                 else:
                     id = request.GET.get('id')
 
-                # print("id in request remove_product_cart_: " + str(id))
-
                 item_decrement(request, id)
 
-            elif action == 'get_total_cart':
+            elif action == 'update_total_cart':
                 total = get_total_cart(request)
+                print("total:: " + str(total))
+                return JsonResponse({"total": str(total)}, status=200)
+
+            elif action == 'update_nb_articles_cart':
                 nb_articles = get_nb_articles(request)
-                # print('{"total": total, "nb_articles":nb_articles}: ' + str({"total": total, "nb_articles":nb_articles}))
-                return JsonResponse({"total": total, "nb_articles":nb_articles}, status=200)
+                return JsonResponse({"nb_articles": str(nb_articles)}, status=200)
+
+            elif action == 'clear_cart':
+                cart_clear(request)
+                return  JsonResponse({}, status=200)
 
             values = list(request.session.get('cart').values())
 

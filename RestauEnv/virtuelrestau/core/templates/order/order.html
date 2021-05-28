@@ -26,6 +26,8 @@
 </div>
 
 {% include "order/summary_order.html" with items=request.session.cart.items adresse=form.adresse.value %}
+
+<script src= "{% static 'order/js/ajax.js' %}" ></script>
 <script src= "{% static 'order/js/order.js' %}" ></script>
 
 {% endblock %}

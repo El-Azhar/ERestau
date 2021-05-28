@@ -4,7 +4,7 @@ $.ajax({
     url: '/cart/ajax/',
     type: 'get',
     data: {
-        action: 'get_total_cart',
+        action: 'update_total_cart',
     },
     success: function(response){
         var total = response.total

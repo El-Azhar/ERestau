@@ -5,10 +5,14 @@
 
 .modal-header {
     font-size: 2rem;
-    background: green;
     background-color: #062b32;
 }
 
+
+
+#button-vider-paier {
+    float: left;
+}
 span.text-header{
     color: white;
     text-transform: uppercase;
