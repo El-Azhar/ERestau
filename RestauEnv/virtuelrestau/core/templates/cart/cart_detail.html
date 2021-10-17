@@ -7,11 +7,11 @@
                 <div class="modal-content">
 
 <!-------------------------------   entête du popup  --------------------------->
-                 <div class="modal-header">
+                 <div class="modal-header" id="popup-cart">
 
 					<span class="gauche">
                         <div class="retour-popup-cart">
-                            <a href="#" class="btn btn-warning" >Retour</a>
+                            <a href="#" class="btn btn-warning" id="btn-popup">Retour</a>
                         </div>
                     </span>
 
@@ -20,7 +20,7 @@
                      </span>
 
                     <span class="droite">
-                        <a href="#" class="btn btn-warning">Modifier</a>
+                        <a href="#" class="btn btn-warning" id="btn-popup">Modifier</a>
                     </span>
 
 
@@ -34,7 +34,6 @@
                     <div class="cart-card-items">
                         {% include 'cart/cart_card_items.html' %}
                     </div>
-
                      <div class="row">
                          <div class="col-md-7">
                              <p id="total-text"> Total: </p>

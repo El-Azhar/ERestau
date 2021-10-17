@@ -8,6 +8,7 @@
 {% block head %}
 
 <link rel="stylesheet" href="{% static 'ouazzane/css/ouazzane.css' %}"/>
+<link rel="stylesheet" href="{% static 'ouazzane/css/ouazzane-mobile.css' %}"/>
 {% include "cart/cart_detail.html" with items=request.session.cart.items %}
 
 {% endblock %}
@@ -15,10 +16,15 @@
 
 
 <div class="fixed-bottom">
-    <button type="button" class="btn btn-primary btn-circle btn-xl" data-toggle="modal" data-target="#popup" id="cart-button"></button>
-    <div id="cercle_nb_articles">
-        -1
-    </div>
+{#    <button type="button" class="btn btn-primary btn-circle btn-xl" data-toggle="modal" data-target="#popup" id="cart-button"></button>#}
+{#    <div id="cercle_nb_articles">#}
+{#        0#}
+{#    </div>#}
+{#    <span class="count bg-dark text-white cart-nb-element" id="cercle_nb_articles">0</span>#}
+    <button type="button" class="btn btn-primary btn-circle btn-xl " data-toggle="modal" data-target="#popup" id="cart-button">
+        <i class="fas fa-shopping-cart"></i>
+    </button>
+    <span class="count bg-dark text-white cart-nb-element" id="cercle_nb_articles">0</span>
 </div>
 
 <br>
@@ -31,28 +37,29 @@
     <h1 class="display-4">Nos produits</h1>
     {% endif %}
 
-  <br>
-  <div class="row row-cols-md-1 row-cols-md-2 row-cols-md-3 g-4">
+    <div class="ouazzane-items">
 
+    </div>
+{#  <div class="row row-cols-md-1 row-cols-md-2 row-cols-md-3 g-4">#}
+    <div class="row g-4" id="row-card-product">
   {% for product in products %}
-    <div class="card" id="card_{{product.id}}" style="margin: 3%;">
+      <div class="col-lg-4 col-mg-6 col-sm-6" id="card-container">
+    <div class="card" id="card_{{product.id}}" style="margin: 10px;">
       <img src="{{ product.photo.url }}" class="card-img-top">
 
-      <div class="card-body">
+      <div class="card-body" id="card-product-body">
 
           <div class="card-title">
-              <h4> {{ product.name }}</h4>
+              <p id="product-name"> {{ product.name }}</p>
           </div>
 
-        <div class="card-price-plus" style="display:flex; justify-content: space-between; align-items: center">
+        <div class="card-price-plus" >
             <div class="card-price">
-                <p>100 dh</p>
+                <p>{{ product.price }} dh</p>
             </div>
-
-
             <div class="clickEvent">
               <div class="logo-plus"  >
-                <img class="plus-button" src="/media/menu/icon/Logo-plus.png" id="{{product.id}}">
+                <img class="plus-button" src="{% static '/icon/logo-plus.png' %}" id="{{product.id}}">
               </div>
             </div>
 
@@ -61,7 +68,7 @@
       </div>
 
     </div>
-
+      </div>
   {% endfor %}
 
   </div>

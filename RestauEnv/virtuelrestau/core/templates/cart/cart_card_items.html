@@ -1,6 +1,7 @@
 {%  load static %}
-{% for key,value in items %}
 
+{% for key,value in items %}
+    {% if value.quantity > 0 %}
         <div  id="cart-info">
 
             <div class="media">
@@ -38,6 +39,8 @@
                             <div class="clickEvent">
                                 <div class="logo-plus-cart"  >
                                     <img  class="plus-button" src="/media/menu/icon/Logo-plus.png"  id="add_product_cart_{{key}}">
+{#                                    <img  class="plus-button" src="/media/menu/icon/Logo-plus.png"  id="add_product_cart_{{key}}">#}
+{#                                    <i class="fas fa-plus-circle plus-button" id="add_product_cart_{{key}}"></i>#}
                                 </div>
                             </div>
                         </div>
@@ -47,7 +50,7 @@
             </div>
         </div>
         <br>
-
+    {% endif %}
 {% endfor %}
 
 <script src= "{% static 'cart/js/cart.js' %}" ></script>

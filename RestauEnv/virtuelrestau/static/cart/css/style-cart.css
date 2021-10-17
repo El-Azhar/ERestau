@@ -9,7 +9,6 @@
 }
 
 
-
 #button-vider-paier {
     float: left;
 }
@@ -20,10 +19,13 @@ span.text-header{
     margin: auto;
 }
 
-.btn-warning{
+a#btn-popup{
     font-size: 1.5rem;
 }
 
+div#popup-cart{
+    /*background-color: black;*/
+}
 p {
   text-align: center;
 }

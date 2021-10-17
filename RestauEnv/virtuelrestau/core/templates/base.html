@@ -2,17 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+
+    {%load static %}
     {% load bootstrap4 %}
     {% bootstrap_css %}
     {% bootstrap_javascript jquery='full' %}
+
+    <link href="/static/fontawesome/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'base/css/base.css' %}"/>
+    <link rel="stylesheet" href="{% static 'base/css/base-mobile.css' %}"/>
+
+
+
     {% block head %} {% endblock%}
+
+
 </head>
+
 
 <body>
 
-    <nav class="navbar {% if not request.user.is_authenticated %} navbar-expand-lg {% endif %} navbar-light bg-warning">
-    <a class="navbar-brand" href="/">VirtualRestau</a>
+    <nav class="navbar {% if not request.user.is_authenticated %} navbar-expand-lg {% endif %}" style="background-color: var(--bg-primary-color);" id="navbar-ouazzane">
+    <a class="navbar-brand" href="/" style="color: var(--txt-secondary-color)" id="hany-home">Hany</a>
 
 
     {% if not request.user.is_authenticated %}
@@ -36,9 +49,9 @@
           </ul>
     </div>
     {% else %}
-    <form class="form-inline">
-      <span class="mr-4">{{ request.user.get_full_name|title }}</span>
-      <a href="/sign-out" class="btn btn-outline-dark">Se déconnecter</a>
+    <form class="form-inline" >
+      <span class="mr-4" id="text-name-title">{{ request.user.get_full_name|title }}</span>
+      <a href="/sign-out" class="btn btn-outline-dark" id="btn-logout">Se déconnecter</a>
     </form>
     {% endif %}
 </nav>

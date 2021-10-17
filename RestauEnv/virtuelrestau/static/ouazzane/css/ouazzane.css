@@ -1,3 +1,25 @@
+@import url(//db.onlinewebfonts.com/c/582446f2160501b8cfd4c7ee4d39a939?family=Bembo+Titling+MT+Std);
+
+@font-face {font-family: "Bembo";
+    src: url("//db.onlinewebfonts.com/t/582446f2160501b8cfd4c7ee4d39a939.eot");
+    src: url("//db.onlinewebfonts.com/t/582446f2160501b8cfd4c7ee4d39a939.eot?#iefix") format("embedded-opentype"),
+    url("//db.onlinewebfonts.com/t/582446f2160501b8cfd4c7ee4d39a939.woff2") format("woff2"),
+    url("//db.onlinewebfonts.com/t/582446f2160501b8cfd4c7ee4d39a939.woff") format("woff"),
+    url("//db.onlinewebfonts.com/t/582446f2160501b8cfd4c7ee4d39a939.ttf") format("truetype"),
+    url("//db.onlinewebfonts.com/t/582446f2160501b8cfd4c7ee4d39a939.svg#Bembo Titling MT Std") format("svg");
+}
+
+h1.display-4 {
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 3.5rem;
+    color: var(--txt-primary-color);
+    text-shadow: -2px  2px  var(--txt-shadow-primary-color),
+                  2px -2px  var(--txt-shadow-primary-color),
+                  2px  2px  var(--txt-shadow-primary-color),
+                 -2px -2px  var(--txt-shadow-primary-color);
+}
+
 /* slider */
 .slide {
     position: relative;
@@ -33,18 +55,21 @@ div.scrollmenu a:hover {
 }
 
 .plus-button {
-    width:75px ;
+    width:40px ;
     cursor:pointer;
     float:right;
 }
 
 .card-price {
-    font-size: 2rem;
+    font-size: 1.5rem;
     float: left;
     margin-top: 1rem;
+    font-weight: bold;
     /*margin-bottom: 2rem;*/
 }
+
 /* css button cart */
+/*
 .btn-circle.btn-xl {
     position: relative;
     height: 9%;
@@ -60,17 +85,36 @@ div.scrollmenu a:hover {
     background-size: 100% ;
     border-width: thin;
     }
+*/
 
-#cercle_nb_articles {
-    /*position: relative;*/
-    /*top:0;*/
-    /*left:0;*/
-    /*width: 0;*/
-    /*height: 4%;*/
-    /*padding-right: 4%;*/
-    /*padding-top: 4%;*/
-    /*border-radius: 100%;*/
-    /*background: #333;*/
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.428571429;
+    border-radius: 15px;
+}
+.btn-circle.btn-lg {
+    width: 50px;
+    height: 50px;
+    padding: 10px 16px;
+    font-size: 18px;
+    line-height: 1.33;
+    border-radius: 25px;
+}
+.btn-circle.btn-xl {
+    width: 70px;
+    height: 70px;
+    padding: 10px 16px;
+    font-size: 24px;
+    line-height: 1.33;
+    border-radius: 35px;
+}
+
+.cercle_nb_articles {
+
     height: 75px;
     width: 75px;
     border-radius: 50%;
@@ -89,17 +133,69 @@ div.scrollmenu a:hover {
 
 }
 
+#cart-button:hover {
+    color: #fff;
+    background-color: #31740f;
+    border-color: #f6e6c2;
+}
 
+#cart-button:focus{
+    color: #000000;
+    background-color: #f6e6c2;
+    border-color: #f6e6c2;
+}
+
+.cart-nb-element {
+    position: absolute;
+    top: -3px;
+    left: 0px;
+    padding: 5px;
+    border-radius: 50%;
+}
 
 .fixed-bottom{
    transform: translateX(85%);
    padding-bottom: 5% ;
 }
 
-.button{
-    background-image: url(/static/icon/emcart-2.png);
-    cursor:pointer;
+.primary-color {
+    color: #f6e6c2;
 }
 
+.bg-primary {
+    background-color: #f6e6c2;
+}
 
+.btn-primary {
+    color: #000000;
+    background-color: #f6e6c2;
+    border-color: #d4bc7f;
+}
+
+.card-body{
+    background-color: var(--bg-primary-color);
+}
+
+.card-img-top {
+    width: 300px;
+    height: 350px;
+}
+
+.card{
+    width: 300px;
+    height: 480px;
+}
+
+p#product-name {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.card-price-plus {
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: -20px;
+}
 

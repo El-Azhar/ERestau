@@ -1,11 +1,11 @@
 const form_client = document.querySelectorAll(".form-client");
-const btn_valid_customer_form = document.querySelectorAll(".button-form");
-
+const btn_valid_customer_form = document.querySelector(".button-form");
+document.quer
 function isNumeric(value) {
     return /^-?\d+$/.test(value);
 }
 
-btn_valid_customer_form[0].addEventListener('click', e =>{
+btn_valid_customer_form.addEventListener('click', e =>{
     var last_name = $("#id_last_name").val();
     var first_name = $("#id_first_name").val();
     var adresse = $("#id_adresse").val();
